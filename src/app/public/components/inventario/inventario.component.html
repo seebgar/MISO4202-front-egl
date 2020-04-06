@@ -1,1 +1,75 @@
-<p>inventario works!</p>
+<ng-container *ngIf="isAdmin(); then adminPanel; else userPanel"></ng-container>
+
+<!-- Template si usuario es Admin -->
+<ng-template #adminPanel>
+  <div>
+    <nb-card>
+      <nb-card-header>
+        <h2>{{ titulo }}</h2>
+      </nb-card-header>
+      <nb-card-body
+        [nbSpinner]="cargando"
+        nbSpinnerStatus="primary"
+        nbSpinnerSize="large"
+        nbSpinnerMessage="Cargando"
+        style="min-height: 100px;"
+      >
+        <div class="row" style="margin-bottom: 1rem;">
+          <div class="col-6">
+            <input
+              #search
+              class="d-inline p-2 form-control"
+              type="text"
+              placeholder="Buscar..."
+              (keydown.enter)="onSearch(search.value)"
+            />
+          </div>
+          <div class="col-6">
+            <button
+              nbButton
+              status="success"
+              size="xsmall"
+              class="d-inline p-2 float-right"
+            >
+              <i class="fa fa-plus"></i> Agregar
+            </button>
+          </div>
+        </div>
+        <ng2-smart-table
+          [settings]="settings"
+          [source]="source"
+          (deleteConfirm)="onDelete({ content: $event })"
+        ></ng2-smart-table>
+      </nb-card-body>
+      <!-- <nb-card-footer></nb-card-footer> -->
+    </nb-card>
+  </div>
+</ng-template>
+
+<!-- Template si usuario no es Admin -->
+<ng-template #userPanel>
+  <div class="container">
+    <div class="row justify-content-center text-center">
+      <nb-card class="text-center col-12">
+        <nb-card-body>
+          <h2 class="title">401<br />Acceso Denegado</h2>
+          <br />
+          <button
+            nbButton
+            fullWidth
+            type="button"
+            class="home-button"
+            style="max-width: 30vw; cursor: pointer;"
+            (click)="
+              routerNavigateTo({
+                path: '/dashboard/home'
+              })
+            "
+          >
+            Volver a Inicio
+          </button>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</ng-template>

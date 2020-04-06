@@ -25,6 +25,7 @@ import {
   NbContextMenuModule,
   NbIconModule,
 } from "@nebular/theme";
+
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import { NbSecurityModule } from "@nebular/security";
 
@@ -44,6 +45,7 @@ import { ProveedoresComponent } from "./public/components/proveedores/proveedore
 import { DashboardComponent } from "./public/components/dashboard/dashboard.component";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
+import { MainService } from "./service/main.service";
 
 @NgModule({
   declarations: [
@@ -73,6 +75,7 @@ import { FormsModule } from "@angular/forms";
     NbWindowModule.forRoot(),
     NbToastrModule.forRoot(),
 
+    Ng2SmartTableModule,
     NbCardModule,
     NbInputModule,
     NbCalendarModule,
@@ -101,7 +104,7 @@ import { FormsModule } from "@angular/forms";
 
     AppRoutingModule,
   ],
-  providers: [],
+  providers: [MainService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

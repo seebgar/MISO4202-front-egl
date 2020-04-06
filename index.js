@@ -1,7 +1,10 @@
 const express = require("express");
 const path = require("path");
+var cors = require("cors");
 
 const app = express();
+// CORS-enabled for all origins
+app.use(cors());
 const PORT = normalizePort(process.env.PORT || "5000");
 
 app

@@ -1,16 +1,16 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { MainServiceService } from './main-service.service';
+import { MainService } from "./main.service";
 
-describe('MainServiceService', () => {
-  let service: MainServiceService;
+describe("MainServiceService", () => {
+  let service: MainService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(MainServiceService);
+    service = TestBed.inject(MainService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });
