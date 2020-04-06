@@ -41,7 +41,9 @@ import { InventarioComponent } from "./public/components/inventario/inventario.c
 import { ProductosComponent } from "./public/components/productos/productos.component";
 import { InsumosComponent } from "./public/components/insumos/insumos.component";
 import { ProveedoresComponent } from "./public/components/proveedores/proveedores.component";
-import { DashboardComponent } from './public/components/dashboard/dashboard.component';
+import { DashboardComponent } from "./public/components/dashboard/dashboard.component";
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -59,6 +61,8 @@ import { DashboardComponent } from './public/components/dashboard/dashboard.comp
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    FormsModule,
 
     NbThemeModule.forRoot({ name: "default" }),
 
