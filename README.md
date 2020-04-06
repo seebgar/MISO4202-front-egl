@@ -1,28 +1,120 @@
-# MISO4202-proyecto-frontend
+# [MISO4202-proyecto-frontend](https://miso4202-proyecto.now.sh)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.5.
+<br/>
 
-## Development server
+<strong>Requerimientos</strong>
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+* [NodeJS - Versión 12 o superior](https://nodejs.org/en/) 
+* [NPM - Versión 6 o superior](https://www.npmjs.com/get-npm) 
+* [Angular CLI](https://cli.angular.io)
+  
+  <br/>
+  
+> Para manejo de versiones NodeJS usar [NVM](https://github.com/nvm-sh/nvm)
 
-## Code scaffolding
+> Esta aplicación utiliza <strong>[Nebular](https://akveo.github.io/nebular/)</strong> y <strong>[Bootstrap](https://getbootstrap.com).</strong>
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+<br/>
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Local Deployment
 
-## Running end-to-end tests
+```ssh
+$ git clone https://github.com/seebgar/MISO4202-proyecto-frontend.git front
+$ cd front
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+$ npm install   # sólo la primera vez o cuando se agregen nuevas dependencias
 
-## Further help
+$ npm run build
+$ npm run start
+``` 
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+<hr/>
+
+
+### Development Deployment
+
+
+```ssh
+$ git clone https://github.com/seebgar/MISO4202-proyecto-frontend.git front
+$ cd front
+
+$ npm install   # sólo la primera vez o cuando se agregen nuevas dependencias
+
+$ ng serve -o   # normalemnte corre en localhost:4200
+``` 
+
+
+
+<hr/>
+
+
+
+### File directory
+
+```ssh
+.
+├── package.json  # -> Management and dependencies, application deployment
+├── .gitignore    # -> Specifies intentionally untracked files to ignore
+│
+│
+├── src
+│   ├── app    
+│   |   └── public
+│   |   |     ├── components
+│   |   |     |   ├── inventario    #Componente
+│   |   |     |   |     ├── html    # HTML Template
+│   |   |     |   |     ├── scss    # SCSS Style
+│   |   |     |   |     └── ts      # Typescript File
+│   |   |     |   └── ...
+│   |   |     ├── layout
+│   |   |     ├── home
+│   |   |     └── ...
+│   |   └── service
+│   |   |     ├── main.service.ts   # HTTP Service
+│   |   |     └── ...
+│   |   ├── app-routing.module.ts   # App Routing
+│   |   ├── app-component.ts        # App Entry Point
+│   |   └── app.module.ts           # App Components, Services Declaration
+│   ├── assets
+│   ├── environments
+│   ├── index.html
+│   ├── styles.scss
+│   ├── theme.scss
+│   └── ...
+│   
+└── ...
+
+
+
+    
+``` 
+
+<hr/>
+
+
+
+
+### Angular CLI
+
+
+```ssh
+$ npm install -g @angular/cli       # para instalar
+
+# creación de un componente
+$ ng generate component public/components/NombreComponente
+
+# creación de un servicio
+$ ng generate service service/NombreServicio
+
+# creación de un pipe
+$ng generate pipe pipes/NombrePipe
+
+# Development Deployment
+$ ng serve -o
+``` 
+
+
 
