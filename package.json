@@ -69,5 +69,23 @@
     "ts-node": "~8.3.0",
     "tslint": "~5.18.0",
     "typescript": "~3.7.5"
-  }
+  },
+  "license": "MIT",
+  "author": "Grupo 1",
+  "contributors": [
+    {
+      "name": "Sebastian Garcia",
+      "email": "js.garcial1@uniandes.edu.co",
+      "url": "https://seebgar.now.sh"
+    },
+    {
+      "name": "Cristian Sepulveda"
+    },
+    {
+      "name": "Jenny Herrera"
+    },
+    {
+      "name": "Steven Erira"
+    }
+  ]
 }
