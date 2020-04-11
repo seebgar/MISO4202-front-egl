@@ -28,6 +28,7 @@ import {
 
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import { NbSecurityModule } from "@nebular/security";
+import { ChartModule } from "angular2-chartjs";
 
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -46,6 +47,7 @@ import { DashboardComponent } from "./public/components/dashboard/dashboard.comp
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
 import { MainService } from "./service/main.service";
+import { ChartComponent } from "./public/components/chart/chart.component";
 
 @NgModule({
   declarations: [
@@ -59,12 +61,14 @@ import { MainService } from "./service/main.service";
     InsumosComponent,
     ProveedoresComponent,
     DashboardComponent,
+    ChartComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
+    ChartModule,
 
     NbThemeModule.forRoot({ name: "default" }),
 
