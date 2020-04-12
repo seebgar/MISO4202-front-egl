@@ -123,6 +123,16 @@ export class InventarioComponent implements OnInit {
   }
 
   /**
+   * Muestra una alerta cuando se oprime el botón agregar
+   */
+  public handleAgregar(): void {
+    this.showToastr({
+      title: "Función aún no implementada.",
+      status: "warning",
+    });
+  }
+
+  /**
    * Nebular Smart Table configuration
    * @returns void
    */

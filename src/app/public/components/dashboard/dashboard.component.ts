@@ -28,10 +28,6 @@ export class DashboardComponent implements OnInit {
   /* Manejo de Usuario - Auth */
   private user: any = {};
 
-  /* Nebular Smart Table Configuration */
-  public source: LocalDataSource;
-  public settings: any = {};
-
   /* Nebular Dialog que se encuentra abierto */
   private dialogActivo: any;
 
@@ -44,14 +40,10 @@ export class DashboardComponent implements OnInit {
     private dialogservie: NbDialogService,
     private dialogService: NbDialogService,
     private router: Router
-  ) {
-    this.source = new LocalDataSource();
-    this.configSmartTable();
-  }
+  ) {}
 
   ngOnInit(): void {
     if (this.isAdmin()) {
-      this.getInventario();
     }
   }
 
@@ -63,126 +55,6 @@ export class DashboardComponent implements OnInit {
   public isAdmin(): boolean {
     // TODO - Hacer esto bien: verificar permisos de user registrado mediante guard: AuthService (hacerlo)
     return true;
-  }
-
-  /**
-   * Obtiene una lista con todo el inventario en el sistema
-   * @returns void
-   */
-  private getInventario(): void {
-    this.cargando = true;
-
-    this.inventarioObservable = this.mainService.get({
-      api: this.apiInventario,
-    });
-
-    this.inventarioObservable.subscribe(
-      (observer) => {
-        this.inventarioLista = observer as any[];
-      },
-      (error) => {
-        this.showToastr({
-          title: "No se ha podido establecer una conexión con el servidor.",
-          message: error.message,
-          status: "warning",
-        });
-      },
-      () => {
-        this.source.load(this.inventarioLista);
-        this.cargando = false;
-      }
-    );
-  }
-
-  /**
-   * Eliminar un objeto del inventario
-   * @param {string} _id del objeto a eliminar
-   */
-  public onDelete({ content }: { content: any }): void {
-    if (content && content.data && content.data._id) {
-      this.mainService
-        .delete({ api: `${this.apiInventario}/${content.data._id}` })
-        .subscribe((response) => {
-          if (response && response.errors) {
-            content.confirm.reject();
-            this.showToastr({
-              title: "No se ha eliminado el objeto del inventario!",
-              status: "danger",
-              message: response.message,
-            });
-          } else {
-            this.showToastr({
-              title: "Inventario actualizado.",
-              status: "success",
-            });
-            content.confirm.resolve();
-          }
-        });
-    }
-  }
-
-  /**
-   * Nebular Smart Table configuration
-   * @returns void
-   */
-  private configSmartTable(): void {
-    this.settings = {
-      pager: {
-        display: true,
-        perPage: 10,
-      },
-      hideSubHeader: false,
-      actions: {
-        columnTitle: "Opciones",
-        add: false,
-        filter: false,
-        edit: true,
-        delete: true,
-        position: "left",
-      },
-      edit: {
-        editButtonContent: '<i class="nb-edit"></i>',
-      },
-      delete: {
-        deleteButtonContent: '<i class="nb-trash"></i>',
-        confirmDelete: true,
-      },
-      columns: {
-        completed: {
-          title: "Completed",
-          filter: true,
-          editable: false,
-        },
-        userId: {
-          title: "User ID",
-          editable: false,
-        },
-        title: {
-          title: "Title",
-          editable: false,
-        },
-      },
-    };
-  }
-  /**
-   * Filtra la Samrt Table de modo que solo se muestren las entradas
-   * que contienen los caracteres buscados
-   * @param  {string=""} query cadena de caracteres a buscar
-   * @returns void
-   */
-  public onSearch(query?: string): void {
-    if (!query) this.source.reset();
-    else {
-      this.source.setFilter(
-        [
-          {
-            field: "title",
-            search: query,
-          },
-        ],
-        false
-      );
-    }
   }
 
   /**
