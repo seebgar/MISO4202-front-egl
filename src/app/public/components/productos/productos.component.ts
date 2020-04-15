@@ -17,7 +17,7 @@ export class ProductosComponent implements OnInit {
   public cargando: boolean = false;
 
   /* API Routes */
-  private apiInventario: string = "todos"; // TODO - Cambiarlo al de verdad: 'api/producto'
+  private apiInventario: string = "api/producto";
 
   /* Lista completa del inventario */
   private inventarioLista: any[] = [];
@@ -148,17 +148,17 @@ export class ProductosComponent implements OnInit {
         confirmDelete: true,
       },
       columns: {
-        completed: {
-          title: "Completed",
+        nombre: {
+          title: "Nombre",
           filter: true,
           editable: false,
         },
-        userId: {
-          title: "User ID",
+        unidad: {
+          title: "Unidad",
           editable: false,
         },
-        title: {
-          title: "Title",
+        inventarioActual: {
+          title: "Inventario Actual",
           editable: false,
         },
       },

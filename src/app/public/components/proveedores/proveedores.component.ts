@@ -17,7 +17,7 @@ export class ProveedoresComponent implements OnInit {
   public cargando: boolean = false;
 
   /* API Routes */
-  private apiInventario: string = "todos"; // TODO - Cambiarlo al de verdad: 'api/proveedor'
+  private apiInventario: string = "api/proveedor";
 
   /* Lista completa del inventario */
   private inventarioLista: any[] = [];
@@ -148,17 +148,17 @@ export class ProveedoresComponent implements OnInit {
         confirmDelete: true,
       },
       columns: {
-        completed: {
-          title: "Completed",
+        razonSocial: {
+          title: "Razon Social",
           filter: true,
           editable: false,
         },
-        userId: {
-          title: "User ID",
+        nit: {
+          title: "NIT",
           editable: false,
         },
-        title: {
-          title: "Title",
+        direccion: {
+          title: "Direccion",
           editable: false,
         },
       },

@@ -18,7 +18,7 @@ export class InventarioComponent implements OnInit {
   public cargando: boolean = false;
 
   /* API Routes */
-  private apiInventario: string = "todos"; // TODO - Cambiarlo al de verdad: 'api/inventario'
+  private apiInventario: string = "api/inventario";
 
   /* Lista completa del inventario */
   private inventarioLista: any[] = [];

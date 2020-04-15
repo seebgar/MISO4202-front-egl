@@ -17,7 +17,7 @@ export class InsumosComponent implements OnInit {
   public cargando: boolean = false;
 
   /* API Routes */
-  private apiInventario: string = "todos"; // TODO - Cambiarlo al de verdad: 'api/insumo'
+  private apiInventario: string = "api/insumo";
 
   /* Lista completa del inventario */
   private inventarioLista: any[] = [];
@@ -148,18 +148,22 @@ export class InsumosComponent implements OnInit {
         confirmDelete: true,
       },
       columns: {
-        completed: {
-          title: "Completed",
+        nombre: {
+          title: "Nombre",
           filter: true,
           editable: false,
         },
-        userId: {
-          title: "User ID",
+        sku: {
+          title: "SKU",
           editable: false,
         },
-        title: {
+        unidad: {
           title: "Title",
           editable: false,
+        },
+        inventarioActual: {
+          title: "Inventario Actual",
+          editable: true,
         },
       },
     };

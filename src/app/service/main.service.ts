@@ -7,8 +7,7 @@ import { Observable } from "rxjs";
   providedIn: "root",
 })
 export class MainService {
-  // TODO - Debería estar conectado al verdadero Back
-  readonly BASE_URL = "https://jsonplaceholder.typicode.com";
+  readonly BASE_URL = "https://miso4202-back.herokuapp.com";
   private headers: HttpHeaders;
 
   constructor(private http: HttpClient) {
