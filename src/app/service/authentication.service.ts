@@ -8,7 +8,7 @@ import { LoginModel } from "src/app/public/model/login.model";
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<LoginModel>;
   public currentUser: Observable<LoginModel>;
-  readonly BASE_URL = "http://localhost:3000";
+  readonly BASE_URL = "https://miso4202-back.herokuapp.com";
 
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<any>(
