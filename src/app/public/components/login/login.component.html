@@ -1,0 +1,27 @@
+<nb-layout windowMode>
+    <nb-layout-header fixed>
+        <h1>Login</h1>
+    </nb-layout-header>
+
+
+    <nb-layout-column>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+            <nb-card>
+                <nb-card-body class="example-items-rows">
+                    <input formControlName="email" type="email" nbInput status="basic" placeholder="Email">
+                </nb-card-body>
+                <nb-card-body class="example-items-rows">
+                    <input formControlName="password" type="password" nbInput status="basic" placeholder="Password">
+                </nb-card-body>
+                <nb-card-body class="example-items-rows">
+                    <button [disabled]="loginForm.invalid" nbButton status="basic">Ingresar</button>
+                </nb-card-body>
+            </nb-card>
+        </form>
+    </nb-layout-column>
+
+    <nb-layout-footer fixed>
+        <app-footer></app-footer>
+    </nb-layout-footer>
+</nb-layout>
