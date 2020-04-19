@@ -7,7 +7,7 @@ import { Observable } from "rxjs";
   providedIn: "root",
 })
 export class MainService {
-  readonly BASE_URL = "http://localhost:3000";
+  readonly BASE_URL = "https://miso4202-back.herokuapp.com";
   private headers: HttpHeaders;
 
   constructor(private http: HttpClient) {
