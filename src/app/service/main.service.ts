@@ -7,7 +7,7 @@ import { Observable } from "rxjs";
   providedIn: "root",
 })
 export class MainService {
-  readonly BASE_URL = "https://miso4202-back.herokuapp.com";
+  readonly BASE_URL = "http://localhost:3000";
   private headers: HttpHeaders;
 
   constructor(private http: HttpClient) {
@@ -32,7 +32,7 @@ export class MainService {
    * @return {Observable<any>} respuesta asincrónica
    */
   post({ api, data }: { api: String; data: any }): Observable<any> {
-    return this.http.post(`${this.BASE_URL}/${api}`, JSON.stringify(data), {
+    return this.http.post(`${this.BASE_URL}/${api}`, data, {
       headers: this.headers,
     });
   }
