@@ -1,4 +1,4 @@
-export interface SigningUpModel {
+export interface UserModel {
   email: String;
   name: String;
   password: String;

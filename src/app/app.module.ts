@@ -18,15 +18,15 @@ import { InventarioComponent } from "./public/components/inventario/inventario.c
 import { LoginComponent } from "./public/components/login/login.component";
 import { ProductosComponent } from "./public/components/productos/productos.component";
 import { ProveedoresComponent } from "./public/components/proveedores/proveedores.component";
-import { SigningUpComponent } from "./public/components/signing-up/signing-up.component";
+import { RegisterComponent } from "./public/components/register/register.component";
 import { HomeComponent } from "./public/home/home.component";
 import { FooterComponent } from "./public/layout/footer/footer.component";
 import { HeaderComponent } from "./public/layout/header/header.component";
 import { SidebarComponent } from "./public/layout/sidebar/sidebar.component";
 import { AuthenticationService } from "./service/authentication.service";
+import { ErrorInterceptor } from "./service/error-interceptor.service";
 import { JwtInterceptor } from "./service/jwt-interceptor.service";
 import { MainService } from "./service/main.service";
-import { ErrorInterceptor } from './service/error-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +41,7 @@ import { ErrorInterceptor } from './service/error-interceptor.service';
     ProveedoresComponent,
     DashboardComponent,
     LoginComponent,
-    SigningUpComponent,
+    RegisterComponent,
     ChartComponent,
   ],
   imports: [
@@ -96,7 +96,6 @@ import { ErrorInterceptor } from './service/error-interceptor.service';
     AuthenticationService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-
   ],
   bootstrap: [AppComponent],
 })

@@ -19,6 +19,11 @@ export class SidebarComponent {
       link: "dashboard",
     },
     {
+      title: "Usuarios",
+      icon: "person-outline",
+      link: "usuarios",
+    },
+    {
       title: "COMPONENTES",
       group: true,
     },

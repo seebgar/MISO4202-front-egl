@@ -6,7 +6,7 @@ import { InventarioComponent } from "./public/components/inventario/inventario.c
 import { ProductosComponent } from "./public/components/productos/productos.component";
 import { ProveedoresComponent } from "./public/components/proveedores/proveedores.component";
 import { HomeComponent } from "./public/home/home.component";
-import { SigningUpComponent } from "./public/components/signing-up/signing-up.component";
+import { RegisterComponent } from "./public/components/register/register.component";
 import { LoginComponent } from "./public/components/login/login.component";
 import { AuthGuard } from "./service/auth-guard.service";
 
@@ -32,7 +32,6 @@ const routes: Routes = [
       },
       {
         path: "insumos",
-        canActivate: [AuthGuard],
         component: InsumosComponent,
       },
       {
@@ -43,11 +42,11 @@ const routes: Routes = [
         path: "proveedores",
         component: ProveedoresComponent,
       },
+      {
+        path: "usuarios",
+        component: RegisterComponent,
+      },
     ],
-  },
-  {
-    path: "signing-up",
-    component: SigningUpComponent,
   },
   {
     path: "login",

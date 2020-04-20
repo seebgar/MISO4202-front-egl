@@ -55,6 +55,9 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.loginForm.invalid) {
+      return;
+    }
     const loginModel: LoginModel = {
       email: this.loginForm.controls.email.value,
       password: this.loginForm.controls.password.value,
@@ -77,16 +80,6 @@ export class LoginComponent implements OnInit {
       );
 
     this.submitted = true;
-
-    // stop here if form is invalid
-    if (this.loginForm.invalid) {
-      return;
-
-      // display form values on success
-      alert(
-        "SUCCESS!! :-)\n\n" + JSON.stringify(this.loginForm.value, null, 4)
-      );
-    }
   }
 
   /**

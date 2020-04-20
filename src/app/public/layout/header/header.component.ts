@@ -1,11 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import {
-  NbMediaBreakpointsService,
-  NbMenuService,
-  NbSidebarService,
-  NbThemeService,
-} from "@nebular/theme";
-import { NbIconConfig } from "@nebular/theme";
+import { Router } from "@angular/router";
+import { NbIconConfig, NbMenuService, NbSidebarService } from "@nebular/theme";
+import { AuthenticationService } from "src/app/service/authentication.service";
 
 @Component({
   selector: "app-header",
@@ -21,8 +17,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
-    private themeService: NbThemeService,
-    private breakpointService: NbMediaBreakpointsService
+    private authenticationService: AuthenticationService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
@@ -36,5 +32,10 @@ export class HeaderComponent implements OnInit {
   navigateHome() {
     this.menuService.navigateHome();
     return false;
+  }
+
+  public logout(): void {
+    this.authenticationService.logout();
+    this.router.navigate(["/"]);
   }
 }
