@@ -16,7 +16,7 @@ import { FormGroupDirective } from "@angular/forms";
 @Component({
   selector: "app-insumos",
   templateUrl: "./insumos.component.html",
-  //styleUrls: ["./insumos.component.scss"],
+  styleUrls: ["./insumos.component.scss"],
 })
 export class InsumosComponent implements OnInit, OnDestroy {
   /* Manejo de Usuario */
@@ -29,7 +29,7 @@ export class InsumosComponent implements OnInit, OnDestroy {
   public cargando: boolean = false;
 
   /* API Routes */
-  readonly API_ALL: string = "api/insumo";
+  readonly API_ALL: string = "api/insumos";
 
   /* Observables - Async */
   public allObervable: Observable<any>;

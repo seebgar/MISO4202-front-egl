@@ -16,7 +16,7 @@ import { FormGroupDirective } from "@angular/forms";
 @Component({
   selector: "app-proveedores",
   templateUrl: "./proveedores.component.html",
-  //styleUrls: ["./proveedores.component.scss"],
+  styleUrls: ["./proveedores.component.scss"],
 })
 export class ProveedoresComponent implements OnInit, OnDestroy {
   /* Manejo de Usuario */
@@ -29,7 +29,7 @@ export class ProveedoresComponent implements OnInit, OnDestroy {
   public cargando: boolean = false;
 
   /* API Routes */
-  readonly API_ALL: string = "api/proveedor";
+  readonly API_ALL: string = "api/proveedores";
 
   /* Observables - Async */
   public allObervable: Observable<any>;
