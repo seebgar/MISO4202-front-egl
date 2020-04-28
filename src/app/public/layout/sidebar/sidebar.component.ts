@@ -27,18 +27,14 @@ export class SidebarComponent {
       title: "COMPONENTES",
       group: true,
     },
-
     {
-      title: "Insumos",
-      icon: "keypad-outline",
+      title: "insumos",
+      icon: "grid-outline",
       link: "insumos",
     },
-
     {
-      title: "Proveeedores",
-      // icon: "keypad-outline",
-      // icon: "grid-outline",
-      icon: "shopping-cart-outline",
+      title: "proveedores",
+      icon: "grid-outline",
       link: "proveedores",
     },
   ];
