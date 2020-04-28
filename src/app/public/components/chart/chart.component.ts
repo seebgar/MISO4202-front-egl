@@ -10,7 +10,7 @@ const AMERICAN_COLORS = {
 @Component({
   selector: "app-chart",
   template: `<canvas #chartRef style="width: 100%;"></canvas>`,
-  styleUrls: ["./chart.component.scss"],
+  //styleUrls: ["./chart.component.scss"],
 })
 export class ChartComponent implements OnInit {
   /* Referencia al chart en HTML */

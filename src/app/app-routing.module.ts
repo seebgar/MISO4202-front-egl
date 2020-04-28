@@ -2,8 +2,6 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { DashboardComponent } from "./public/components/dashboard/dashboard.component";
 import { InsumosComponent } from "./public/components/insumos/insumos.component";
-import { InventarioComponent } from "./public/components/inventario/inventario.component";
-import { ProductosComponent } from "./public/components/productos/productos.component";
 import { ProveedoresComponent } from "./public/components/proveedores/proveedores.component";
 import { HomeComponent } from "./public/home/home.component";
 import { RegisterComponent } from "./public/components/register/register.component";
@@ -26,18 +24,12 @@ const routes: Routes = [
         path: "dashboard",
         component: DashboardComponent,
       },
-      {
-        path: "inventario",
-        component: InventarioComponent,
-      },
+
       {
         path: "insumos",
         component: InsumosComponent,
       },
-      {
-        path: "productos",
-        component: ProductosComponent,
-      },
+
       {
         path: "proveedores",
         component: ProveedoresComponent,

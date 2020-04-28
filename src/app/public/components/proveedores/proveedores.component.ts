@@ -1,15 +1,27 @@
-import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
-import { Observable } from "rxjs";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  OnDestroy,
+} from "@angular/core";
+import { Router } from "@angular/router";
+import { Observable, Subscription } from "rxjs";
 import { LocalDataSource } from "ng2-smart-table";
+//import { AuthService } from "src/app/service/auth.service";
 import { MainService } from "src/app/service/main.service";
 import { NbToastrService, NbDialogService } from "@nebular/theme";
-import { Router } from "@angular/router";
+import { FormGroupDirective } from "@angular/forms";
+
 @Component({
   selector: "app-proveedores",
   templateUrl: "./proveedores.component.html",
-  styleUrls: ["./proveedores.component.scss"],
+  //styleUrls: ["./proveedores.component.scss"],
 })
-export class ProveedoresComponent implements OnInit {
+export class ProveedoresComponent implements OnInit, OnDestroy {
+  /* Manejo de Usuario */
+  public user: any = {};
+
   /* Titulo en HTML */
   public titulo = "Proveedores";
 
@@ -17,43 +29,55 @@ export class ProveedoresComponent implements OnInit {
   public cargando: boolean = false;
 
   /* API Routes */
-  private apiInventario: string = "api/proveedor";
-
-  /* Lista completa del inventario */
-  private inventarioLista: any[] = [];
+  readonly API_ALL: string = "api/proveedor";
 
   /* Observables - Async */
-  private inventarioObservable: Observable<any>;
+  public allObervable: Observable<any>;
 
-  /* Manejo de Usuario - Auth */
-  private user: any = {};
+  /* Manejo de subscripcion para evitar Memory Leaks */
+  // disclamer: HTTP Request manejan su propio unsubscribe por lo que no generan leaks.
+  public subscriptions: Subscription[] = [];
 
   /* Nebular Smart Table Configuration */
   public source: LocalDataSource;
   public settings: any = {};
 
-  /* Nebular Dialog que se encuentra abierto */
-  private dialogActivo: any;
+  /* Objeto creado a partir de un Form */
+  public objetoCreado: any = {};
 
-  /* HTML Selector References */
+  /* Child References */
   @ViewChild("dialogAgregar", { static: true }) dialogAgregar: ElementRef;
+  @ViewChild("addForm", { static: false }) addForm: FormGroupDirective;
+
+  /* Dialog que se encuentra abierto */
+  public dialogActivo: any;
 
   constructor(
+    //  private authService: AuthService,
     private mainService: MainService,
     private toastrService: NbToastrService,
-    private dialogservie: NbDialogService,
     private dialogService: NbDialogService,
     private router: Router
   ) {
     this.source = new LocalDataSource();
-    this.configSmartTable();
+    this.config();
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    //  this.user = this.authService.user;
+
     if (this.isAdmin()) {
-      this.getInventario();
+      this.getAll();
     }
   }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subs) => subs.unsubscribe());
+  }
+
+  // =================================
+  // Metodos
+  // ================================
 
   /**
    * Verifica si el usuario en sesión tiene
@@ -61,122 +85,303 @@ export class ProveedoresComponent implements OnInit {
    * @returns {boolean}
    */
   public isAdmin(): boolean {
-    // TODO - Hacer esto bien: verificar permisos de user registrado mediante guard: AuthService (hacerlo)
     return true;
   }
 
   /**
-   * Obtiene una lista con todo el inventario en el sistema
+   * Organiza por fecha de creadcion en el servidor
+   * @param a primer objeto
+   * @param b segundo objeto
+   */
+  public sortCreatedAt(a, b): number {
+    const dateA: Date = a ? new Date(a.createdAt) : new Date();
+    const dateB: Date = b ? new Date(b.createdAt) : new Date();
+    return dateB.getTime() - dateA.getTime();
+  }
+
+  // =================================
+  // Metodos Handlers
+  // ================================
+
+  /**
+   * De abrir el dialog que le permite al usuario
+   * registar un nuevo objeto
    * @returns void
    */
-  private getInventario(): void {
+  public handleModalAgregar(): void {
+    this.showDialog({ dialog: this.dialogAgregar });
+  }
+
+  /**
+   * Muestra un mensaje cuando el servidor responde NULL
+   */
+  public handleResponseNull(): void {
+    this.showToastr({
+      title: "No se ha establecido una conexión con el servidor.",
+      status: "basic",
+    });
+  }
+
+  /**
+   * Muestra un mensaje con el error
+   * @param {any} error generado por el request
+   */
+  public handleError({ error }: { error: any }): void {
+    this.showToastr({
+      title: "Se han encontrado errores.",
+      status: "warning",
+      message: error.message || error || "not found",
+    });
+  }
+
+  /**
+   * Muestra un mensaje de success
+   * @param {string} title del mensaje
+   */
+  public handleSuccess({ title }: { title: string }): void {
+    this.showToastr({
+      title: `${title}`,
+      status: "success",
+    });
+  }
+
+  // =================================
+  // Metodos CRUD
+  // ================================
+
+  /**
+   * Obtiene los objeto del servidor
+   * @returns void
+   */
+  public getAll(): void {
     this.cargando = true;
 
-    this.inventarioObservable = this.mainService.get({
-      api: this.apiInventario,
+    this.allObervable = this.mainService.get({
+      api: this.API_ALL,
     });
 
-    this.inventarioObservable.subscribe(
-      (observer) => {
-        this.inventarioLista = observer as any[];
+    const subs = this.allObervable.subscribe(
+      (response) => {
+        if (response) {
+          if (response.errors) {
+            this.handleError({ error: response.errors });
+          } else {
+            const objetos = response as any[];
+            this.source.load(objetos.sort(this.sortCreatedAt));
+          }
+        } else {
+          this.handleResponseNull();
+          this.source.load([]);
+        }
       },
       (error) => {
-        this.showToastr({
-          title: "No se ha podido establecer una conexión con el servidor.",
-          message: error.message,
-          status: "warning",
-        });
+        this.handleError({ error });
+        this.cargando = false;
+        this.source.load([]);
       },
       () => {
-        this.source.load(this.inventarioLista);
         this.cargando = false;
+      }
+    );
+
+    this.subscriptions.push(subs);
+  }
+
+  /**
+   * Crea un objeto usando la msmart table
+   * @param {content} value del formulario en Smart Table
+   * @returns void
+   */
+  public onCreate({ content }: { content: any }): void {
+    if (!content || !content.newData) {
+      this.showToastr({
+        title: "El formulario no se ha completado.",
+        status: "warning",
+      });
+      return;
+    }
+
+    const request = this.mainService.post({
+      api: `${this.API_ALL}`,
+      data: content.newData,
+    });
+
+    request.subscribe(
+      (response) => {
+        if (response) {
+          if (response.errors) {
+            this.handleError({ error: response.errors });
+          } else {
+            this.handleSuccess({ title: "Creado!" });
+            if (content) content.confirm.resolve(content.newData);
+          }
+        } else {
+          this.handleResponseNull();
+        }
+      },
+      (error) => {
+        this.handleError({ error });
+      },
+      () => {}
+    );
+  }
+
+  /**
+   * Actualiza un objeto
+   * @param {any} content event smart table
+   * @returns void
+   */
+  public onUpdate({ content }: { content: any }): void {
+    if (!content || (content && !content.newData)) {
+      this.showToastr({
+        title: "Selección inválida.",
+        status: "warning",
+      });
+      return;
+    }
+
+    const request = this.mainService.put({
+      api: `${this.API_ALL}/${content.data._id}`,
+      data: content.newData,
+    });
+
+    request.subscribe(
+      (response) => {
+        if (response) {
+          if (response.errors) {
+            this.handleError({ error: response.errors });
+          } else {
+            this.handleSuccess({ title: "Actualizado!" });
+            if (content) content.confirm.resolve(content.newData);
+          }
+        } else {
+          this.handleResponseNull();
+        }
+      },
+      (error) => {
+        this.handleError({ error });
       }
     );
   }
 
   /**
-   * Eliminar un objeto del inventario
-   * @param {string} _id del objeto a eliminar
+   * Elimina un objeto del servidor
+   * @param {any} content event smart table
+   * @returns void
    */
   public onDelete({ content }: { content: any }): void {
-    if (content && content.data && content.data._id) {
-      this.mainService
-        .delete({ api: `${this.apiInventario}/${content.data._id}` })
-        .subscribe((response) => {
-          if (response && response.errors) {
-            content.confirm.reject();
-            this.showToastr({
-              title: "No se ha eliminado el objeto del inventario!",
-              status: "danger",
-              message: response.message,
-            });
-          } else {
-            this.showToastr({
-              title: "Inventario actualizado.",
-              status: "success",
-            });
-            content.confirm.resolve();
-          }
-        });
+    if (!content) {
+      this.showToastr({
+        title: "Selección inválida.",
+        status: "warning",
+      });
+      return;
     }
+
+    const msn =
+      "Se eliminará un objeto. Esta acción no se puede revertir, seguro?";
+
+    if (!confirm(`${msn}`)) {
+      return;
+    }
+
+    const request = this.mainService.delete({
+      api: `${this.API_ALL}/${content.data._id}`,
+    });
+
+    request.subscribe(
+      (response) => {
+        if (response) {
+          if (response.errors) {
+            this.handleError({ error: response.errors });
+          } else {
+            this.handleSuccess({ title: "Eliminado!" });
+            if (content) content.confirm.resolve(content.newData);
+          }
+        } else {
+          this.handleResponseNull();
+        }
+      },
+      (error) => {
+        this.handleError({ error });
+      }
+    );
   }
+
+  // =================================
+  // Metodos Genericos
+  // ================================
 
   /**
    * Nebular Smart Table configuration
    * @returns void
    */
-  private configSmartTable(): void {
+  public config(): void {
+    // configuracion de la Tabla Smart
+
     this.settings = {
       pager: {
         display: true,
-        perPage: 10,
+        perPage: 15,
       },
       hideSubHeader: false,
+
       actions: {
         columnTitle: "Opciones",
-        add: false,
-        filter: false,
+        add: true,
+        filter: true,
         edit: true,
         delete: true,
         position: "left",
       },
-      edit: {
-        editButtonContent: '<i class="nb-edit"></i>',
-      },
+
       delete: {
         deleteButtonContent: '<i class="nb-trash"></i>',
         confirmDelete: true,
       },
+      edit: {
+        editButtonContent: '<i class="nb-edit"></i>',
+        saveButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>',
+        confirmSave: true,
+      },
+      add: {
+        addButtonContent: '<i class="nb-plus"></i>',
+        createButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>',
+        confirmCreate: true,
+      },
+      mode: "inline",
       columns: {
         razonSocial: {
           title: "Razon Social",
+          editable: true,
           filter: true,
-          editable: false,
+          width: "45%",
         },
         nit: {
           title: "NIT",
           editable: false,
-        },
-        direccion: {
-          title: "Direccion",
-          editable: false,
+          filter: true,
+          width: "45%",
         },
       },
     };
   }
+
   /**
    * Filtra la Samrt Table de modo que solo se muestren las entradas
    * que contienen los caracteres buscados
    * @param  {string=""} query cadena de caracteres a buscar
    * @returns void
    */
-  public onSearch(query?: string): void {
+  public onSearch({ query }: { query: string }): void {
     if (!query) this.source.reset();
     else {
       this.source.setFilter(
         [
           {
-            field: "title",
+            field: "nombre",
             search: query,
           },
         ],
@@ -193,7 +398,7 @@ export class ProveedoresComponent implements OnInit {
    * @param  {any} status puede ser (basic, primary, success, info, warning, danger, control)
    * @returns void
    */
-  private showToastr({
+  public showToastr({
     position,
     title,
     message,
@@ -215,16 +420,6 @@ export class ProveedoresComponent implements OnInit {
   }
 
   /**
-   * Abre un dialogo estilo nebular
-   * @param  {any} dialog referencia al template en html
-   * que contiene el dialogo. Debería der tipye ElementRef o TypeReference
-   * @returns void
-   */
-  public showDialog({ dialog }: { dialog: any }): void {
-    this.dialogActivo = this.dialogService.open(dialog, { context: "" });
-  }
-
-  /**
    * Se encarga de navegar a la URL especificada
    * @param {string} path -> "/dashboard/inventario/:id"
    * @return void
@@ -238,5 +433,15 @@ export class ProveedoresComponent implements OnInit {
         });
       }
     });
+  }
+
+  /**
+   * Abre un dialogo estilo nebular
+   * @param  {any} dialog referencia al template en html
+   * que contiene el dialogo. Debería der tipye ElementRef o TypeReference
+   * @returns void
+   */
+  public showDialog({ dialog }: { dialog: any }): void {
+    this.dialogActivo = this.dialogService.open(dialog, { context: "" });
   }
 }

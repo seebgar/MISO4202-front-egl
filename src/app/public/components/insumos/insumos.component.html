@@ -1,13 +1,19 @@
-<ng-container *ngIf="isAdmin(); then adminPanel; else userPanel"></ng-container>
+<nb-card>
+  <nb-card-body>
+    <ng-container
+      *ngIf="isAdmin(); then adminPanel; else userPanel"
+    ></ng-container>
+  </nb-card-body>
+</nb-card>
 
 <!-- Template si usuario es Admin -->
 <ng-template #adminPanel>
   <div>
-    <nb-card>
-      <nb-card-header>
+    <div>
+      <div>
         <h2>{{ titulo }}</h2>
-      </nb-card-header>
-      <nb-card-body
+      </div>
+      <div
         [nbSpinner]="cargando"
         nbSpinnerStatus="primary"
         nbSpinnerSize="large"
@@ -20,8 +26,8 @@
               #search
               class="d-inline p-2 form-control"
               type="text"
-              placeholder="Buscar..."
-              (keydown.enter)="onSearch(search.value)"
+              placeholder="Buscar ..."
+              (keyup)="onSearch({ query: search.value })"
             />
           </div>
           <div class="col-6">
@@ -29,20 +35,24 @@
               nbButton
               status="success"
               size="xsmall"
-              class="d-inline p-2 float-right"
+              class="d-inline p-2 pull-right"
+              (click)="handleModalAgregar()"
             >
               <i class="fa fa-plus"></i> Agregar
             </button>
           </div>
         </div>
+        <br />
         <ng2-smart-table
           [settings]="settings"
           [source]="source"
+          (createConfirm)="onCreate({ content: $event })"
+          (editConfirm)="onUpdate({ content: $event })"
           (deleteConfirm)="onDelete({ content: $event })"
         ></ng2-smart-table>
-      </nb-card-body>
+      </div>
       <!-- <nb-card-footer></nb-card-footer> -->
-    </nb-card>
+    </div>
   </div>
 </ng-template>
 
@@ -72,4 +82,9 @@
       </nb-card>
     </div>
   </div>
+</ng-template>
+
+<!-- Tamplate Dialog Agregar  -->
+<ng-template #dialogAgregar let-data let-ref="dialogRef">
+  <h1>Proximamente ...</h1>
 </ng-template>

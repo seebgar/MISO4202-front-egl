@@ -6,7 +6,32 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NbEvaIconsModule } from "@nebular/eva-icons";
 import { NbSecurityModule } from "@nebular/security";
-import { NbActionsModule, NbButtonModule, NbCalendarModule, NbCalendarRangeModule, NbCardModule, NbContextMenuModule, NbDatepickerModule, NbDialogModule, NbIconModule, NbInputModule, NbLayoutModule, NbMenuModule, NbPopoverModule, NbSearchModule, NbSelectModule, NbSidebarModule, NbSpinnerModule, NbStepperModule, NbTabsetModule, NbThemeModule, NbToastrModule, NbTooltipModule, NbUserModule, NbWindowModule } from "@nebular/theme";
+import {
+  NbActionsModule,
+  NbButtonModule,
+  NbCalendarModule,
+  NbCalendarRangeModule,
+  NbCardModule,
+  NbContextMenuModule,
+  NbDatepickerModule,
+  NbDialogModule,
+  NbIconModule,
+  NbInputModule,
+  NbLayoutModule,
+  NbMenuModule,
+  NbPopoverModule,
+  NbSearchModule,
+  NbSelectModule,
+  NbSidebarModule,
+  NbSpinnerModule,
+  NbStepperModule,
+  NbTabsetModule,
+  NbThemeModule,
+  NbToastrModule,
+  NbTooltipModule,
+  NbUserModule,
+  NbWindowModule,
+} from "@nebular/theme";
 import { ChartModule } from "angular2-chartjs";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import { AppRoutingModule } from "./app-routing.module";
@@ -14,9 +39,7 @@ import { AppComponent } from "./app.component";
 import { ChartComponent } from "./public/components/chart/chart.component";
 import { DashboardComponent } from "./public/components/dashboard/dashboard.component";
 import { InsumosComponent } from "./public/components/insumos/insumos.component";
-import { InventarioComponent } from "./public/components/inventario/inventario.component";
 import { LoginComponent } from "./public/components/login/login.component";
-import { ProductosComponent } from "./public/components/productos/productos.component";
 import { ProveedoresComponent } from "./public/components/proveedores/proveedores.component";
 import { RegisterComponent } from "./public/components/register/register.component";
 import { HomeComponent } from "./public/home/home.component";
@@ -35,8 +58,6 @@ import { MainService } from "./service/main.service";
     HeaderComponent,
     FooterComponent,
     SidebarComponent,
-    InventarioComponent,
-    ProductosComponent,
     InsumosComponent,
     ProveedoresComponent,
     DashboardComponent,
