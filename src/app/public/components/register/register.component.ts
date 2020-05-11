@@ -60,6 +60,7 @@ export class RegisterComponent implements OnInit {
       name: ["", [Validators.required]],
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required, Validators.minLength(8)]],
+      role: ["", [Validators.required, Validators.minLength(2)]],
     });
     this.loadUserList();
   }
@@ -82,6 +83,7 @@ export class RegisterComponent implements OnInit {
       name: this.userForm.controls.name.value,
       email: this.userForm.controls.email.value,
       password: this.userForm.controls.password.value,
+      role: this.userForm.controls.role.value,
     };
 
     this.mainService
@@ -132,8 +134,8 @@ export class RegisterComponent implements OnInit {
           title: "Correo Electronico",
           editable: false,
         },
-        password: {
-          title: "Password",
+        role: {
+          title: "role",
           editable: false,
         },
       },
