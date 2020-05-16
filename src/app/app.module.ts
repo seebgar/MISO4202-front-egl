@@ -50,6 +50,7 @@ import { AuthenticationService } from "./service/authentication.service";
 import { ErrorInterceptor } from "./service/error-interceptor.service";
 import { JwtInterceptor } from "./service/jwt-interceptor.service";
 import { MainService } from "./service/main.service";
+import { DataComponent } from "./public/components/data/data.component";
 
 @NgModule({
   declarations: [
@@ -64,12 +65,14 @@ import { MainService } from "./service/main.service";
     LoginComponent,
     RegisterComponent,
     ChartComponent,
+    DataComponent,
   ],
   imports: [
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FormsModule,
     ReactiveFormsModule,
     ChartModule,
 

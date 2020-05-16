@@ -2,7 +2,11 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { LoginModel } from "src/app/public/model/login.model";
+
+export interface LoginModel {
+  email: String;
+  password: String;
+}
 
 @Injectable()
 export class AuthenticationService {

@@ -37,5 +37,14 @@ export class SidebarComponent {
       icon: "grid-outline",
       link: "proveedores",
     },
+    {
+      title: "DATA",
+      group: true,
+    },
+    {
+      title: "data",
+      icon: "grid-outline",
+      link: "data",
+    },
   ];
 }

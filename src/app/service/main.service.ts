@@ -13,7 +13,6 @@ export class MainService {
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
     this.headers.append("Content-Type", "application/json");
-    // TODO - falta Auth
   }
 
   /**

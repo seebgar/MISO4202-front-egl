@@ -29,7 +29,7 @@ export class ProveedoresComponent implements OnInit, OnDestroy {
   public cargando: boolean = false;
 
   /* API Routes */
-  readonly API_ALL: string = "api/proveedores";
+  readonly API_ALL: string = "api/proveedor";
 
   /* Observables - Async */
   public allObervable: Observable<any>;

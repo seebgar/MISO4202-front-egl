@@ -7,6 +7,7 @@ import { HomeComponent } from "./public/home/home.component";
 import { RegisterComponent } from "./public/components/register/register.component";
 import { LoginComponent } from "./public/components/login/login.component";
 import { AuthGuard } from "./service/auth-guard.service";
+import { DataComponent } from "./public/components/data/data.component";
 
 const routes: Routes = [
   {
@@ -17,7 +18,7 @@ const routes: Routes = [
 
   {
     path: "home",
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     component: HomeComponent,
     children: [
       {
@@ -37,6 +38,10 @@ const routes: Routes = [
       {
         path: "usuarios",
         component: RegisterComponent,
+      },
+      {
+        path: "data",
+        component: DataComponent,
       },
     ],
   },

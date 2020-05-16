@@ -5,7 +5,12 @@ import { NbDialogService, NbToastrService } from "@nebular/theme";
 import { LocalDataSource } from "ng2-smart-table";
 import { AuthenticationService } from "src/app/service/authentication.service";
 import { MainService } from "src/app/service/main.service";
-import { UserModel } from "../../model/user.model";
+
+export interface UserModel {
+  email: String;
+  name: String;
+  password: String;
+}
 
 @Component({
   templateUrl: "./register.component.html",

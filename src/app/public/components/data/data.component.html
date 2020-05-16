@@ -1,0 +1,83 @@
+<nb-card>
+  <nb-card-body>
+    <ng-container
+      *ngIf="isAdmin(); then adminPanel; else userPanel"
+    ></ng-container>
+  </nb-card-body>
+</nb-card>
+
+<!-- Template si usuario es Admin -->
+<ng-template #adminPanel>
+  <div>
+    <h2>{{ titulo }}</h2>
+  </div>
+
+  <br />
+
+  <div style="margin: 2rem 0;">
+    <form>
+      <div class="form-group">
+        <nb-select
+          [(ngModel)]="api.route"
+          #route="ngModel"
+          placeholder="RUTA API"
+          size="small"
+          style="min-width: 180px;"
+          id="api"
+          name="api"
+          required
+        >
+          <nb-option value="insumo">insumo</nb-option>
+          <nb-option value="proveedor">proveedor</nb-option>
+        </nb-select>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlFile1">Upload CSV File</label>
+        <input
+          type="file"
+          #csvReader
+          name="Upload CSV"
+          id="txtFileUpload"
+          (change)="onUpload({ content: $event })"
+          accept=".csv"
+          class="form-control-file"
+          id="exampleFormControlFile1"
+        />
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<!-- Template si usuario no es Admin -->
+<ng-template #userPanel>
+  <div class="container">
+    <div class="row justify-content-center text-center">
+      <nb-card class="text-center col-12">
+        <nb-card-body>
+          <h2 class="title">401<br />Acceso Denegado</h2>
+          <br />
+          <button
+            nbButton
+            fullWidth
+            type="button"
+            class="home-button"
+            style="max-width: 30vw; cursor: pointer;"
+            (click)="
+              routerNavigateTo({
+                path: '/dashboard/home'
+              })
+            "
+          >
+            Volver a Inicio
+          </button>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Tamplate Dialog Agregar  -->
+<ng-template #dialogAgregar let-data let-ref="dialogRef">
+  <h1>Proximamente ...</h1>
+</ng-template>
